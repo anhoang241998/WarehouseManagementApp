@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'shared/di/di_configure.dart';
+import 'shared/routes/app_route.dart';
 
 void main() async {
   await _initApp();
@@ -7,26 +11,19 @@ void main() async {
 
 Future<void> _initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.light(),
-        home: const MyHomePage(),
-      );
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => const Scaffold(
-        body: Center(
-          child: Text('hello'),
+  Widget build(BuildContext context) => ScreenUtilInit(
+        minTextAdapt: true,
+        builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light(),
+          onGenerateRoute: AppRoute.generateRoute,
         ),
       );
 }
