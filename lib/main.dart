@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'data/local/models/device_entity.dart';
 import 'shared/di/di_configure.dart';
 import 'shared/routes/app_route.dart';
 
@@ -14,6 +15,7 @@ Future<void> _initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   await Hive.initFlutter();
+  Hive.registerAdapter(DeviceEntityAdapter());
   await Hive.openBox('device_table');
 }
 
