@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-class DeviceEntity extends Equatable {
+class Device extends Equatable {
   final String deviceCode;
 
-  const DeviceEntity({required this.deviceCode});
+  const Device({required this.deviceCode});
 
   @override
   List<Object> get props => [deviceCode];
 
-  DeviceEntity copyWith({
+  Device copyWith({
     String? deviceCode,
   }) =>
-      DeviceEntity(
+      Device(
         deviceCode: deviceCode ?? this.deviceCode,
       );
 

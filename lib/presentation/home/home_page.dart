@@ -54,6 +54,9 @@ class _HomeLayoutState extends State<HomeLayout> {
                       Expanded(
                         child: DeviceList(
                           deviceList: state.deviceList ?? [],
+                          onItemTapped: (device) {
+                            debugPrint('device ${device.deviceCode}');
+                          },
                         ),
                       )
                     ],
@@ -61,7 +64,9 @@ class _HomeLayoutState extends State<HomeLayout> {
                 ),
               ),
               floatingActionButton: AddButton(
-                setOnTapListener: () {},
+                setOnTapListener: () {
+                  context.read<HomeCubit>().addNewDevice();
+                },
               ),
             ),
           ),

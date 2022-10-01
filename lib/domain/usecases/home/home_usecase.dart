@@ -1,28 +1,45 @@
 import 'package:injectable/injectable.dart';
 
-import '../../models/device_entity.dart';
+import '../../../data/local/models/device_entity.dart';
+import '../../models/device.dart';
+import '../../repositories/device_repository.dart';
 
 abstract class HomeUseCase {
-  List<DeviceEntity> loadDevices();
+  List<Device> loadDevices();
 
-  List<DeviceEntity> searchDevices(String deviceCode);
+  List<Device> searchDevices(String codeToSearch);
+
+  Future<void> addNewDevice(DeviceEntity newDevice);
 }
 
+/// `HomeUseCaseImpl` is a class that implements `HomeUseCase` and provides a list
+/// of devices
 @Injectable(as: HomeUseCase)
 class HomeUseCaseImpl extends HomeUseCase {
-  final List<DeviceEntity> _deviceList = List.generate(
-    100,
-    (index) => DeviceEntity(deviceCode: '$index'),
-  );
+  final DeviceRepository _deviceRepository;
+
+  HomeUseCaseImpl({
+    required DeviceRepository deviceRepository,
+  }) : _deviceRepository = deviceRepository;
 
   @override
-  List<DeviceEntity> loadDevices() => _deviceList;
+  List<Device> loadDevices() => _deviceRepository
+      .fetchAllDevice()
+      .map((deviceEntity) => Device(deviceCode: deviceEntity.deviceCode))
+      .toList();
 
   @override
-  List<DeviceEntity> searchDevices(String deviceCode) {
-    if (deviceCode.isEmpty) return _deviceList;
-    return _deviceList
-        .where((device) => device.deviceCode == deviceCode)
-        .toList();
+  List<Device> searchDevices(String codeToSearch) {
+    final deviceList = loadDevices();
+    if (codeToSearch.isEmpty) return deviceList;
+    return deviceList.where((device) {
+      final code = device.deviceCode.replaceAll(' ', '').toLowerCase();
+      return code.contains(codeToSearch.replaceAll(' ', '').toLowerCase());
+    }).toList();
+  }
+
+  @override
+  Future<void> addNewDevice(DeviceEntity newDevice) async {
+    await _deviceRepository.addNewDevice(newDevice);
   }
 }

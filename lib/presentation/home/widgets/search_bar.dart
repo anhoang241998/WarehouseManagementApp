@@ -21,7 +21,6 @@ class SearchBar extends StatelessWidget {
           hintText: 'Search the device code',
           prefixIcon: const Icon(Icons.search),
         ),
-        autofocus: true,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
       );

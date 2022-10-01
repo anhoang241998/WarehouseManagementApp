@@ -4,7 +4,7 @@ enum HomeStatus { initial, loading, loaded, error }
 
 class HomeState extends Equatable {
   final HomeStatus status;
-  final List<DeviceEntity>? deviceList;
+  final List<Device>? deviceList;
 
   const HomeState({
     required this.status,
@@ -21,7 +21,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     HomeStatus? status,
-    List<DeviceEntity>? deviceList,
+    List<Device>? deviceList,
   }) =>
       HomeState(
         status: status ?? this.status,
