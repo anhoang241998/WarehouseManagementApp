@@ -1,30 +1,67 @@
-import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'device_entity.g.dart';
 
 @HiveType(typeId: 1)
-class DeviceEntity extends Equatable {
+class DeviceEntity extends HiveObject {
   @HiveField(0)
-  final int id;
+  final String code;
 
   @HiveField(1)
-  final String deviceCode;
+  final String name;
 
-  const DeviceEntity({required this.id, required this.deviceCode});
+  @HiveField(2)
+  final String block;
 
-  @override
-  bool? get stringify => true;
+  @HiveField(3)
+  final String floor;
 
-  @override
-  List<Object> get props => [id, deviceCode];
+  @HiveField(4)
+  final String position;
+
+  @HiveField(5)
+  final String subPosition;
+
+  @HiveField(6)
+  final String shortLabel;
+
+  @HiveField(7)
+  final bool isNew;
+
+  DeviceEntity({
+    required this.code,
+    required this.name,
+    required this.block,
+    required this.floor,
+    required this.position,
+    required this.subPosition,
+    required this.shortLabel,
+    this.isNew = true,
+  });
 
   DeviceEntity copyWith({
     int? id,
-    String? deviceCode,
+    String? code,
+    String? name,
+    String? block,
+    String? floor,
+    String? position,
+    String? subPosition,
+    String? shortLabel,
+    bool? isNew,
   }) =>
       DeviceEntity(
-        id: id ?? this.id,
-        deviceCode: deviceCode ?? this.deviceCode,
+        code: code ?? this.code,
+        name: name ?? this.name,
+        block: block ?? this.block,
+        floor: floor ?? this.floor,
+        position: position ?? this.position,
+        subPosition: subPosition ?? this.subPosition,
+        shortLabel: shortLabel ?? this.shortLabel,
+        isNew: isNew ?? this.isNew,
       );
+
+  @override
+  String toString() =>
+      'DeviceEntity{code: $code, name: $name, block: $block, floor: $floor, position: $position, subPosition: $subPosition, shortLabel: $shortLabel, isNew: $isNew}';
 }

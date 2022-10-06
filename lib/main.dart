@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         builder: (context, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData.light(),
+          theme: ThemeData.light().copyWith(dividerColor: Colors.transparent),
           onGenerateRoute: AppRoute.generateRoute,
         ),
       );
