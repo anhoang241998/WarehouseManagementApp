@@ -5,7 +5,7 @@ abstract class DeviceRepository {
 
   Future<void> addNewDevice(DeviceEntity deviceEntity);
 
-  Future<void> updateDevice(DeviceEntity deviceEntity);
+  Future<void> updateDevice(int key, DeviceEntity deviceEntity);
 
   Future<void> deleteDevice(DeviceEntity deviceEntity);
 }

@@ -40,7 +40,6 @@ class DeviceEntity extends HiveObject {
   });
 
   DeviceEntity copyWith({
-    int? id,
     String? code,
     String? name,
     String? block,

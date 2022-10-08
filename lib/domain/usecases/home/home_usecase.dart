@@ -80,11 +80,9 @@ class HomeUseCaseImpl extends HomeUseCase {
   @override
   Future<void> updateUnseenDevice(Device deviceToUpdate) async {
     final deviceList = _deviceRepository.fetchAllDevice();
-    final device = deviceList
-        .firstWhere((device) => device.code == deviceToUpdate.code)
-        .copyWith(
-          isNew: deviceToUpdate.isNew,
-        );
-    await _deviceRepository.updateDevice(device);
+    final device =
+        deviceList.firstWhere((device) => device.code == deviceToUpdate.code);
+    final updatedDevice = device.copyWith(isNew: deviceToUpdate.isNew);
+    await _deviceRepository.updateDevice(device.key as int, updatedDevice);
   }
 }
