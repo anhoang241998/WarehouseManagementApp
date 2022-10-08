@@ -12,9 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart' as _i7;
 
 import '../../data/repositories/device_repository_impl.dart' as _i5;
 import '../../domain/repositories/device_repository.dart' as _i4;
+import '../../domain/usecases/add_edit_device/add_edit_device_usecase.dart'
+    as _i8;
 import '../../domain/usecases/home/home_usecase.dart' as _i6;
-import '../../presentation/home/bloc/home_cubit.dart' as _i8;
-import 'module/app_module.dart' as _i9; // ignore_for_file: unnecessary_lambdas
+import '../../presentation/add_edit_device/bloc/add_edit_device_cubit.dart'
+    as _i10;
+import '../../presentation/home/bloc/home_cubit.dart' as _i9;
+import 'module/app_module.dart' as _i11; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -37,9 +41,13 @@ Future<_i1.GetIt> $initGetIt(
     () => appModule.sharedPrefs,
     preResolve: true,
   );
-  gh.factory<_i8.HomeCubit>(
-      () => _i8.HomeCubit(homeUseCase: get<_i6.HomeUseCase>()));
+  gh.factory<_i8.AddEditDeviceUseCase>(() => _i8.AddEditDeviceUseCaseImpl(
+      deviceRepository: get<_i4.DeviceRepository>()));
+  gh.factory<_i9.HomeCubit>(
+      () => _i9.HomeCubit(homeUseCase: get<_i6.HomeUseCase>()));
+  gh.factory<_i10.AddEditDeviceCubit>(() => _i10.AddEditDeviceCubit(
+      addEditDeviceUseCase: get<_i8.AddEditDeviceUseCase>()));
   return get;
 }
 
-class _$AppModule extends _i9.AppModule {}
+class _$AppModule extends _i11.AppModule {}

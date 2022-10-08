@@ -11,17 +11,18 @@ class DeviceRepositoryImpl extends DeviceRepository {
 
   @override
   List<DeviceEntity> fetchAllDevice() =>
-      deviceBox.values.toList().cast<DeviceEntity>();
+      deviceBox.values.toList().cast<DeviceEntity>().reversed.toList();
 
   @override
   Future<void> addNewDevice(DeviceEntity deviceEntity) async =>
-      await deviceBox.put(deviceEntity.id, deviceEntity);
+      await deviceBox.add(deviceEntity);
 
   @override
-  Future<void> updateDevice(DeviceEntity deviceEntity) async =>
-      await deviceBox.put(deviceEntity.id, deviceEntity);
+  Future<void> updateDevice(int key, DeviceEntity deviceEntity) async {
+    await deviceBox.put(key, deviceEntity);
+  }
 
   @override
   Future<void> deleteDevice(DeviceEntity deviceEntity) async =>
-      await deviceBox.delete(deviceEntity.id);
+      await deviceBox.delete(deviceEntity.key);
 }

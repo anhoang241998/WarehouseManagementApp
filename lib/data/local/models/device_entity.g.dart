@@ -17,19 +17,37 @@ class DeviceEntityAdapter extends TypeAdapter<DeviceEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DeviceEntity(
-      id: fields[0] as int,
-      deviceCode: fields[1] as String,
+      code: fields[0] as String,
+      name: fields[1] as String,
+      block: fields[2] as String,
+      floor: fields[3] as String,
+      position: fields[4] as String,
+      subPosition: fields[5] as String,
+      shortLabel: fields[6] as String,
+      isNew: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, DeviceEntity obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.code)
       ..writeByte(1)
-      ..write(obj.deviceCode);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.block)
+      ..writeByte(3)
+      ..write(obj.floor)
+      ..writeByte(4)
+      ..write(obj.position)
+      ..writeByte(5)
+      ..write(obj.subPosition)
+      ..writeByte(6)
+      ..write(obj.shortLabel)
+      ..writeByte(7)
+      ..write(obj.isNew);
   }
 
   @override
