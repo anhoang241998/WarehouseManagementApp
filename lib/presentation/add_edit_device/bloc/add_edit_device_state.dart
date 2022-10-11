@@ -22,6 +22,7 @@ class AddEditDeviceState extends Equatable {
 
   AddEditDeviceState copyWith({
     AddEditDeviceStatus? status,
+    Device? device,
     String? error,
   }) =>
       AddEditDeviceState(

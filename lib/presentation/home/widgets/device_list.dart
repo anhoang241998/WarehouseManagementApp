@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -67,7 +69,14 @@ class DeviceList extends StatelessWidget {
                   children: [
                     Text('Code: ${device.code}'),
                     const SizedBox(height: 8),
-                    Text(device.shortLabel),
+                    Text(
+                      device.shortLabel,
+                      style: TextStyle(
+                        color: Colors.red.shade400,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -80,9 +89,27 @@ class DeviceList extends StatelessWidget {
               },
               children: [
                 ListTile(title: Text('Block: ${device.block}')),
-                ListTile(title: Text('Floor: ${device.block}')),
+                ListTile(title: Text('Floor: ${device.floor}')),
                 ListTile(title: Text('Position: ${device.position}')),
                 ListTile(title: Text('Sub-Position: ${device.subPosition}')),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Material(
+                    elevation: 2,
+                    borderRadius: BorderRadius.circular(4),
+                    clipBehavior: Clip.antiAlias,
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: 2,
+                        child: Image.file(
+                          File(device.imageUrl),
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 ListTile(
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,

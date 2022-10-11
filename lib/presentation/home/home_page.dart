@@ -7,14 +7,19 @@ import '../../domain/models/device.dart';
 import '../../shared/di/di_configure.dart';
 import '../../shared/routes/app_route.dart';
 import '../../shared/widgets/custom_dialog.dart';
-import '../add_edit_device/add_edit_device_page.dart';
+import '../add_edit_device/add_edit_page_params.dart';
 import 'bloc/home_cubit.dart';
-import 'widgets/add_button.dart';
+import 'home_params.dart';
 import 'widgets/device_list.dart';
 import 'widgets/search_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final HomeParams params;
+
+  const HomePage({
+    required this.params,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,7 +32,7 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return BlocProvider<HomeCubit>(
       create: (context) => getIt<HomeCubit>(),
-      child: const HomeLayout(),
+      child: HomeLayout(params: widget.params),
     );
   }
 
@@ -36,23 +41,34 @@ class _HomePageState extends State<HomePage>
 }
 
 class HomeLayout extends StatefulWidget {
-  const HomeLayout({Key? key}) : super(key: key);
+  final HomeParams params;
+
+  const HomeLayout({
+    required this.params,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<HomeCubit>().loadListOfDevice();
-  }
-
   void listenerForAddButton() {
     Navigator.of(context)
         .pushNamed(AppRoute.addEditRoute,
-            arguments: const AddEditPageParams(isAdd: true))
+            arguments: const AddEditPageParams(isAddNewDevice: true))
+        .then((_) => context.read<HomeCubit>().loadListOfDevice());
+  }
+
+  void listenerForEditDevice(Device device) {
+    Navigator.of(context)
+        .pushNamed(
+          AppRoute.addEditRoute,
+          arguments: AddEditPageParams(
+            isAddNewDevice: false,
+            device: device,
+          ),
+        )
         .then((_) => context.read<HomeCubit>().loadListOfDevice());
   }
 
@@ -63,6 +79,13 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   void updateUnseenDevice(Device device) {
     context.read<HomeCubit>().updateUnseenDeviceToReadDevice(device);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.params.onAddButtonTapped = listenerForAddButton;
+    context.read<HomeCubit>().loadListOfDevice();
   }
 
   @override
@@ -91,15 +114,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                           deviceList: state.deviceList ?? [],
                           onItemExpandedListener: updateUnseenDevice,
                           onCreateNewButtonTapped: listenerForAddButton,
-                          onItemTapped: (device) {
-                            // Navigator.of(context).pushNamed(
-                            //   AppRoute.addEditRoute,
-                            //   arguments: AddEditPageParams(
-                            //     isAdd: false,
-                            //     device: device,
-                            //   ),
-                            // );
-                          },
+                          onItemTapped: listenerForEditDevice,
                           onItemDeleteTapped: (device) {
                             showDialog(
                               context: context,
@@ -119,9 +134,6 @@ class _HomeLayoutState extends State<HomeLayout> {
                   ),
                 ),
               ),
-              floatingActionButton: (state.deviceList ?? []).isEmpty
-                  ? null
-                  : AddButton(setOnTapListener: listenerForAddButton),
             ),
           ),
         ),

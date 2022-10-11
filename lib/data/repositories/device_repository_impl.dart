@@ -18,9 +18,8 @@ class DeviceRepositoryImpl extends DeviceRepository {
       await deviceBox.add(deviceEntity);
 
   @override
-  Future<void> updateDevice(int key, DeviceEntity deviceEntity) async {
-    await deviceBox.put(key, deviceEntity);
-  }
+  Future<void> updateDevice(int key, DeviceEntity deviceEntity) async =>
+      await deviceBox.put(key, deviceEntity);
 
   @override
   Future<void> deleteDevice(DeviceEntity deviceEntity) async =>

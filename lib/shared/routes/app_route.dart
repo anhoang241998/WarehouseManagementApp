@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../presentation/add_edit_device/add_edit_device_page.dart';
+import '../../presentation/add_edit_device/add_edit_page_params.dart';
 import '../../presentation/app_navigation.dart';
 import '../../presentation/not_found/not_found_page.dart';
 

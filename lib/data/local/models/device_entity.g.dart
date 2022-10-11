@@ -24,6 +24,7 @@ class DeviceEntityAdapter extends TypeAdapter<DeviceEntity> {
       position: fields[4] as String,
       subPosition: fields[5] as String,
       shortLabel: fields[6] as String,
+      imageUrl: fields[8] as String,
       isNew: fields[7] as bool,
     );
   }
@@ -31,7 +32,7 @@ class DeviceEntityAdapter extends TypeAdapter<DeviceEntity> {
   @override
   void write(BinaryWriter writer, DeviceEntity obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.code)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class DeviceEntityAdapter extends TypeAdapter<DeviceEntity> {
       ..writeByte(6)
       ..write(obj.shortLabel)
       ..writeByte(7)
-      ..write(obj.isNew);
+      ..write(obj.isNew)
+      ..writeByte(8)
+      ..write(obj.imageUrl);
   }
 
   @override

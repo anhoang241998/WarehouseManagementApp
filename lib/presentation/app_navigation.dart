@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'home/home_page.dart';
-import 'user/user_page.dart';
+import 'home/home_params.dart';
+import 'home/widgets/add_button.dart';
+import 'setting/setting_page.dart';
 
 class AppNavigation extends StatefulWidget {
   const AppNavigation({Key? key}) : super(key: key);
@@ -14,10 +16,7 @@ class _AppNavigationState extends State<AppNavigation> {
   int _currentIndex = 0;
   late PageController _pageController;
 
-  final tabs = [
-    const HomePage(),
-    const UserPage(),
-  ];
+  final homeParams = HomeParams();
 
   void _onItemBottomTapped(int index) => setState(() {
         _currentIndex = index;
@@ -39,16 +38,31 @@ class _AppNavigationState extends State<AppNavigation> {
         body: PageView(
           controller: _pageController,
           onPageChanged: (index) => setState(() => _currentIndex = index),
-          children: tabs,
+          children: [
+            HomePage(
+              params: homeParams,
+            ),
+            const SettingPage()
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'User'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Setting',
+            ),
           ],
           onTap: _onItemBottomTapped,
         ),
+        floatingActionButton: AddButton(
+          setOnTapListener: () => homeParams.onAddButtonTapped?.call(),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
 
   @override

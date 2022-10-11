@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Device extends Equatable {
+  final int id;
   final String name;
   final String code;
   final String block;
@@ -8,9 +9,11 @@ class Device extends Equatable {
   final String position;
   final String subPosition;
   final String shortLabel;
+  final String imageUrl;
   final bool isNew;
 
   const Device({
+    required this.id,
     required this.name,
     required this.code,
     required this.block,
@@ -18,6 +21,7 @@ class Device extends Equatable {
     required this.position,
     required this.subPosition,
     required this.shortLabel,
+    required this.imageUrl,
     this.isNew = true,
   });
 
@@ -32,8 +36,10 @@ class Device extends Equatable {
     String? shortLabel,
     bool? isNew,
     bool? isExpanded,
+    String? imageUrl,
   }) =>
       Device(
+        id: id ?? this.id,
         name: name ?? this.name,
         code: code ?? this.code,
         block: block ?? this.block,
@@ -42,6 +48,7 @@ class Device extends Equatable {
         subPosition: subPosition ?? this.subPosition,
         shortLabel: shortLabel ?? this.shortLabel,
         isNew: isNew ?? this.isNew,
+        imageUrl: imageUrl ?? this.imageUrl,
       );
 
   @override
@@ -49,6 +56,7 @@ class Device extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
         name,
         code,
         block,
@@ -57,5 +65,6 @@ class Device extends Equatable {
         subPosition,
         shortLabel,
         isNew,
+        imageUrl,
       ];
 }

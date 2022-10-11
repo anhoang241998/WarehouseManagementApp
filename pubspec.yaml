@@ -56,6 +56,10 @@ dependencies:
   # others
   qr_flutter: ^4.0.0
   equatable: ^2.0.5
+  image_picker: ^0.8.6
+  path_provider: ^2.0.11
+  dotted_border: ^2.0.0+2
+  transparent_image: ^2.0.0
 
 dev_dependencies:
   flutter_test:

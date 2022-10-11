@@ -30,6 +30,7 @@ class HomeUseCaseImpl extends HomeUseCase {
       .fetchAllDevice()
       .map(
         (deviceEntity) => Device(
+          id: deviceEntity.key as int,
           code: deviceEntity.code,
           name: deviceEntity.name,
           block: deviceEntity.block,
@@ -37,6 +38,7 @@ class HomeUseCaseImpl extends HomeUseCase {
           position: deviceEntity.position,
           subPosition: deviceEntity.subPosition,
           shortLabel: deviceEntity.shortLabel,
+          imageUrl: deviceEntity.imageUrl,
           isNew: deviceEntity.isNew,
         ),
       )

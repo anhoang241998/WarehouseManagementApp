@@ -28,6 +28,9 @@ class DeviceEntity extends HiveObject {
   @HiveField(7)
   final bool isNew;
 
+  @HiveField(8)
+  final String imageUrl;
+
   DeviceEntity({
     required this.code,
     required this.name,
@@ -36,6 +39,7 @@ class DeviceEntity extends HiveObject {
     required this.position,
     required this.subPosition,
     required this.shortLabel,
+    required this.imageUrl,
     this.isNew = true,
   });
 
@@ -48,6 +52,7 @@ class DeviceEntity extends HiveObject {
     String? subPosition,
     String? shortLabel,
     bool? isNew,
+    String? imageUrl,
   }) =>
       DeviceEntity(
         code: code ?? this.code,
@@ -58,9 +63,17 @@ class DeviceEntity extends HiveObject {
         subPosition: subPosition ?? this.subPosition,
         shortLabel: shortLabel ?? this.shortLabel,
         isNew: isNew ?? this.isNew,
+        imageUrl: imageUrl ?? this.imageUrl,
       );
 
   @override
-  String toString() =>
-      'DeviceEntity{code: $code, name: $name, block: $block, floor: $floor, position: $position, subPosition: $subPosition, shortLabel: $shortLabel, isNew: $isNew}';
+  String toString() => 'DeviceEntity{code: $code,'
+      ' name: $name,'
+      ' block: $block,'
+      ' floor: $floor,'
+      ' position: $position,'
+      ' subPosition: $subPosition,'
+      ' shortLabel: $shortLabel,'
+      ' isNew: $isNew,'
+      ' imageUrl: $imageUrl}';
 }
